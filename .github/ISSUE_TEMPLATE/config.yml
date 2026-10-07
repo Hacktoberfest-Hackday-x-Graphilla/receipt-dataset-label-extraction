@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Community Discussions
+    url: https://github.com/Hacktoberfest-Hackday-x-Graphilla/receipt-dataset-label-extraction/discussions/new
+    about: Ask questions and chat with the community — no issue needed.
