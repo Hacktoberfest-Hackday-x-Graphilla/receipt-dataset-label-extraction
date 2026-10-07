@@ -3,6 +3,8 @@
 > **Project status: Initial scaffold + minimal starter**
 > The structure and a no-install structure-check script work today. No OCR, AI extraction, dataset processing, or annotation tooling exists yet — everything below is planned or proposed.
 
+## 👉 New here? Read [**START-HERE.md**](START-HERE.md) first — a 2-minute, no-coding guide.
+
 ## Purpose
 
 A dataset-oriented project focused on **collecting receipt images** and preparing **structured labels** that can later be used for OCR, document understanding, computer vision, and AI information extraction.
