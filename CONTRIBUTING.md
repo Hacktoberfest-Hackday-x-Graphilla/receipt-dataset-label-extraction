@@ -2,6 +2,8 @@
 
 Thank you for helping build a high-quality receipt dataset! This repository is an **initial scaffold** — read the guidelines before contributing.
 
+**Never contributed before? No coding needed** — collecting and labeling receipts is data work anyone can do. There's a plain-language guide in [`docs/how-to-contribute.md`](docs/how-to-contribute.md) — you can do almost everything from the GitHub website.
+
 ## Two contribution tracks
 
 1. **Data contributors** — collect, classify, annotate, and validate receipt data.

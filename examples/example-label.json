@@ -1,0 +1,16 @@
+{
+  "receipt_id": "example_2026-10-08_demo-store_001",
+  "image": "dataset/images/raw/example_2026-10-08_demo-store_001.jpg",
+  "merchant": "DEMO STORE",
+  "date": "2026-10-08",
+  "currency": "NPR",
+  "subtotal": 1111.11,
+  "tax": 88.89,
+  "total": 1200.00,
+  "receipt_number": "INV-DEMO-0001",
+  "items": [
+    { "description": "DEMO ITEM", "quantity": 1, "unit_price": 1111.11, "amount": 1111.11 }
+  ],
+  "receipt_type": "demo",
+  "notes": "EXAMPLE ONLY — this is not a real receipt. It illustrates the draft label schema in docs/label-schema.md."
+}

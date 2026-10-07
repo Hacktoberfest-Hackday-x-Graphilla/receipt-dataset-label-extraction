@@ -24,6 +24,7 @@ Build a **clean, human-verified, privacy-safe receipt dataset** with structured 
 | Phase | Description | Status |
 |---|---|---|
 | 0 | Repository scaffold and guidelines | ✅ Done |
+| 0.5 | Minimal running starter (`src/preprocessing/structure_check.py` + tests) | ✅ Done |
 | 1 | Finalize label schema | Planned |
 | 2 | First small batch of privacy-checked images + labels | Planned |
 | 3 | Validation process + reviewer checklist | Planned |

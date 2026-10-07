@@ -1,7 +1,7 @@
 # Receipt Dataset & Label Extraction
 
-> **Project status: Initial scaffold**
-> No OCR, computer vision, AI extraction, dataset processing, or annotation tooling exists yet. Everything below is planned or proposed.
+> **Project status: Initial scaffold + minimal starter**
+> The structure and a no-install structure-check script work today. No OCR, AI extraction, dataset processing, or annotation tooling exists yet — everything below is planned or proposed.
 
 ## Purpose
 
@@ -57,11 +57,26 @@ Human validation is a required stage — raw annotations are never treated as gr
 
 See [`PROJECT.md`](PROJECT.md) for beginner / intermediate / advanced ideas — both data contributors and developers are welcome.
 
-## Current status: initial scaffold only
+## Current status: initial scaffold + minimal starter
+
+**Initial scaffold + a minimal running starter.** Everything else is still
+planned (see [`PROJECT.md`](PROJECT.md)).
 
 - ✅ Structure and guidelines documentation
+- ✅ Starter script: `src/preprocessing/structure_check.py` checks the folder layout and validates annotation JSON
 - ❌ No dataset collected yet
 - ❌ No OCR/CV/AI/annotation tooling
+
+### Try the starter
+
+```bash
+python src/preprocessing/structure_check.py          # folder summary + annotation check
+python src/preprocessing/structure_check.py --list   # also list every file
+python -m unittest discover -s tests -t .               # run the tests
+```
+
+Needs **Python 3 only** — no installs. Not a coder? See
+[`docs/how-to-contribute.md`](docs/how-to-contribute.md).
 
 ## Repository layout
 
@@ -75,3 +90,14 @@ src/                  preprocessing/annotation/extraction/evaluation (planned)
 tests/                tests for future tooling
 .github/              issue templates and CI (planned)
 ```
+
+## No coding? You can still help
+
+This dataset needs **data contributors and labelers as much as developers** —
+and both roles work from the GitHub website with nothing to install. See
+[`docs/how-to-contribute.md`](docs/how-to-contribute.md). Browse issues labelled
+`good first issue` or `beginner` for easy first tasks.
+
+## License
+
+Code: [MIT](LICENSE). Contributed data: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
