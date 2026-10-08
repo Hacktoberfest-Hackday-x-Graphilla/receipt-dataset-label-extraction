@@ -10,6 +10,7 @@ desktop.ini
 # --- Secrets & credentials ---
 .env
 .env.*
+!.env.example
 *.pem
 *.key
 *.p12
@@ -29,3 +30,8 @@ tmp/
 .tmp/
 *.tmp
 scratch/
+
+# --- Receipts + machine labels (your own files, never commit) ---
+pdf/
+dataset/receipts/*
+!dataset/receipts/.gitkeep

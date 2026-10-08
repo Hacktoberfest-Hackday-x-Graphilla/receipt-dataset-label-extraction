@@ -1,6 +1,6 @@
 {
   "receipt_id": "example_2026-10-08_demo-store_001",
-  "image": "dataset/images/raw/example_2026-10-08_demo-store_001.jpg",
+  "image": "dataset/receipts/example_2026-10-08_demo-store_001.jpg",
   "merchant": "DEMO STORE",
   "date": "2026-10-08",
   "currency": "NPR",
@@ -8,9 +8,12 @@
   "tax": 88.89,
   "total": 1200.00,
   "receipt_number": "INV-DEMO-0001",
+  "receipt_type": "grocery",
+  "language": "ne",
   "items": [
     { "description": "DEMO ITEM", "quantity": 1, "unit_price": 1111.11, "amount": 1111.11 }
   ],
-  "receipt_type": "demo",
-  "notes": "EXAMPLE ONLY — this is not a real receipt. It illustrates the draft label schema in docs/label-schema.md."
+  "suggested_by_model": "gemma-4-26b-a4b-it",
+  "reviewed": true,
+  "notes": "EXAMPLE ONLY - not a real receipt. It just shows the label shape a suggestion or a verified label uses."
 }

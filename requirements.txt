@@ -1,0 +1,7 @@
+# Suggest label fields from receipt images/PDFs -> Google AI Studio (Gemma).
+google-genai
+python-dotenv
+pymupdf
+
+# No local OCR binaries needed: scanned (image-only) receipts are sent to the
+# model and read directly by vision.

@@ -1,104 +1,73 @@
 # Receipt Dataset & Label Extraction
 
-> **Project status: Initial scaffold + minimal starter**
-> The structure and a no-install structure-check script work today. No OCR, AI extraction, dataset processing, or annotation tooling exists yet — everything below is planned or proposed.
+Collect **receipt images** and the **labels** extracted from them (merchant, date, total, items…) as an open, human-verified dataset. A future OCR / AI extraction model can be trained and tested against it.
 
-## 👉 New here? Read [**START-HERE.md**](START-HERE.md) first — a 2-minute, no-coding guide.
+**Status: just started.** The label suggester works; the dataset is what contributors build.
 
-## Purpose
-
-A dataset-oriented project focused on **collecting receipt images** and preparing **structured labels** that can later be used for OCR, document understanding, computer vision, and AI information extraction.
-
-Good extraction models need clean, well-labeled receipt data — that dataset is the deliverable of this repository first; pipelines come later.
-
-## What receipt data is being collected
-
-- Photographs and scans of receipts (grocery, restaurant, retail, fuel, utility…)
-- Each image paired with a human-verified label set
-- Provenance and quality metadata for every item
-
-## Intended dataset fields (planned)
-
-| Field | Example |
-|---|---|
-| `merchant` | "Store Name" |
-| `date` | `2026-09-12` |
-| `total` | `1250.00` |
-| `subtotal` | `1157.14` |
-| `tax` | `92.86` |
-| `currency` | `NPR` |
-| `receipt_number` | `INV-0042` |
-| `items` | list of {description, quantity, unit_price, amount} |
-
-Field definitions live in `docs/label-schema.md` (proposed).
-
-## Data / annotation workflow (proposed)
-
-```text
-collect → dataset/images/raw/ → preprocess (planned) → annotate
-→ dataset/annotations/raw/ → validate → dataset/annotations/validated/
-→ dataset/metadata/ index
-```
-
-Human validation is a required stage — raw annotations are never treated as ground truth. Details: `ANNOTATION_GUIDELINES.md` and `docs/annotation-process.md`.
-
-## Potential future OCR & AI extraction (not built)
-
-- OCR over receipt images
-- Field extraction models (merchant/date/total/items)
-- Evaluation harness comparing model output to validated labels
-- Error analysis by receipt type, quality, and layout
-
-## Privacy considerations
-
-- **Redact or avoid** personal data: card numbers, names, addresses, phone numbers, loyalty IDs.
-- Prefer receipts you have the right to share; note restrictions in metadata.
-- Do not submit receipts containing another person's sensitive information.
-
-## Hack Day contribution paths
-
-See [`PROJECT.md`](PROJECT.md) for beginner / intermediate / advanced ideas — both data contributors and developers are welcome.
-
-## Current status: initial scaffold + minimal starter
-
-**Initial scaffold + a minimal running starter.** Everything else is still
-planned (see [`PROJECT.md`](PROJECT.md)).
-
-- ✅ Structure and guidelines documentation
-- ✅ Starter script: `src/preprocessing/structure_check.py` checks the folder layout and validates annotation JSON
-- ❌ No dataset collected yet
-- ❌ No OCR/CV/AI/annotation tooling
-
-### Try the starter
+## Try it
 
 ```bash
-python src/preprocessing/structure_check.py          # folder summary + annotation check
-python src/preprocessing/structure_check.py --list   # also list every file
-python -m unittest discover -s tests -t .               # run the tests
+pip install -r requirements.txt
 ```
 
-Needs **Python 3 only** — no installs. Not a coder? See
-[`docs/how-to-contribute.md`](docs/how-to-contribute.md).
+Then copy `.env.example` to `.env` and put your Google AI Studio API key in `GEMINI_API_KEY`. `.env` is gitignored, so the key never leaves your machine.
 
-## Repository layout
+Drop receipt files (PDF, JPG, PNG, WEBP) into `dataset/receipts/` and run:
+
+```bash
+python -m src.extraction.suggest_labels
+```
+
+For every receipt the script writes one `<name>.label.json` **next to it** — the label fields suggested by a Gemma model. Receipts that already have a suggestion are skipped, so re-running is safe.
+
+How each receipt is read:
+
+- **JPG / PNG / WEBP** → the image is sent to the model and read by vision.
+- **PDF with a text layer** → the text is sent to the model.
+- **Scanned PDF (image only, e.g. a phone photo)** → the page images are sent to the model and read by vision. No local OCR / Tesseract needed.
+
+## The suggested label for one receipt
+
+| Field | Meaning |
+|---|---|
+| `merchant` | store / business name |
+| `date` | ISO date (`YYYY-MM-DD`) |
+| `currency` | 3-letter code (NPR, USD, INR…) |
+| `subtotal` / `tax` / `total` | amounts (plain numbers) |
+| `receipt_number` | printed bill / receipt / invoice number |
+| `receipt_type` | grocery, restaurant, retail, fuel, utility, travel, other |
+| `language` | main language of the receipt (en, ne, hi…) |
+| `items` | list of `{description, quantity, unit_price, amount}` |
+
+Unreadable or missing values are `null` — never invented. See [`examples/example-label.json`](examples/example-label.json).
+
+**Machine suggestions are not data yet.** Review each `.label.json`, fix it if needed, then move it into `dataset/labels/` so it counts. The dataset is the human-verified labels, not the suggestions.
+
+## Contribute — 3 steps, no coding
+
+1. Open the **Issues** tab.
+2. Pick any issue labelled `beginner` or `good first issue`.
+3. Comment **"I'll take this"** and follow the lines in the issue — a comment is enough.
+
+Ideas: submit a privacy-checked receipt photo, review a suggested label, or improve the docs. Stuck? Post in **Discussions** — no question is dumb.
+
+## Data rules (keep it honest)
+
+- **Real receipts only** — you can stand behind every label you contribute.
+- **No personal data** — redact or avoid card numbers, names, addresses, phone numbers, loyalty IDs. Never submit someone else's sensitive information.
+- **No fabrication** — never invent values. Unreadable field? Write `null`.
+- **Rights** — only share material you have the right to redistribute.
+
+## Layout
 
 ```text
-dataset/images/       raw + processed images (empty)
-dataset/annotations/  raw, validated, schemas (empty)
-dataset/metadata/     dataset index (empty)
-docs/                 annotation process, label schema, quality
-examples/             example records (planned)
-src/                  preprocessing/annotation/extraction/evaluation (planned)
-tests/                tests for future tooling
-.github/              issue templates and CI (planned)
+dataset/receipts/      drop receipt files here (gitignored)
+dataset/labels/        human-verified labels (the dataset — contribute here)
+examples/              example label (clearly marked EXAMPLE)
+src/extraction/        the label suggester script
+tests/                 tests
+.env.example           template for your local, gitignored .env
 ```
-
-## No coding? You can still help
-
-This dataset needs **data contributors and labelers as much as developers** —
-and both roles work from the GitHub website with nothing to install. See
-[`docs/how-to-contribute.md`](docs/how-to-contribute.md). Browse issues labelled
-`good first issue` or `beginner` for easy first tasks.
 
 ## License
 

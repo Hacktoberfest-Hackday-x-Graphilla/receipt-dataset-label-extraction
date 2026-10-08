@@ -1,0 +1,2 @@
+# Drop receipt files (PDF, JPG, PNG, WEBP) here for the label suggester.
+# Receipts and their machine-suggested .label.json files are gitignored.
